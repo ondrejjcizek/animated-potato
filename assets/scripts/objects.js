@@ -49,7 +49,7 @@ const addMovieHandler = () => {
       title,
       [extraName]: extraValue,
     },
-    id: Math.random(),
+    id: Math.random().toString(),
   };
 
   movies.push(newMovie);
@@ -59,6 +59,7 @@ const addMovieHandler = () => {
 const searchMovieHandler = () => {
   const filterTerm = document.getElementById('filter-title').value;
   renderMovies(filterTerm);
+  console.log(movies);
 };
 
 addMovieBtn.addEventListener('click', addMovieHandler);
