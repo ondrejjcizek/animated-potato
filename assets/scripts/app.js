@@ -3,23 +3,29 @@ class Product {
     imageUrl;
     price;
     description;
+
+    constructor(title, image, desc, price) {
+        this.title = title;
+        this.imageUrl = image;
+        this.price = price;
+        this.description = desc;
+    }
 };
 
 const productList = {
     products: [
-        new Product (),
-        {   
-            title: 'A Pillow', 
-            imageUrl: 'https://indian-tv.cz/uploads/ls/e81aa3faf1b544bca4461666e830f31e/1641199818.jpg?',
-            price: 19.99,
-            description: 'A soft pillow!'
-        }, 
-        {
-            title: 'A Carpet', 
-            imageUrl: 'https://indian-tv.cz/uploads/ls/e81aa3faf1b544bca4461666e830f31e/1641199818.jpg?',
-            price: 89.99,
-            description: 'A carpet which you might like - or not.'
-        }
+        new Product (
+            'A pillow',
+            'https://indian-tv.cz/uploads/ls/e81aa3faf1b544bca4461666e830f31e/1641199818.jpg?',
+            'A soft pillow!',
+            19.99
+        ),
+        new Product (
+            'A Carpet',
+            'https://indian-tv.cz/uploads/ls/e81aa3faf1b544bca4461666e830f31e/1641199818.jpg?',
+            'A carpet which you might like - or not.',
+            99.99
+        )
     ],
     render() {
         const renderHook = document.getElementById('app');
