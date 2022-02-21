@@ -1,5 +1,13 @@
+class Product {
+    title = 'DEFAULT';
+    imageUrl;
+    price;
+    description;
+};
+
 const productList = {
     products: [
+        new Product (),
         {   
             title: 'A Pillow', 
             imageUrl: 'https://indian-tv.cz/uploads/ls/e81aa3faf1b544bca4461666e830f31e/1641199818.jpg?',
