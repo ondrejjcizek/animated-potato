@@ -8,9 +8,11 @@ class Product {
 }
 
 class Component {
-    constructor(renderHookId) {
+    constructor(renderHookId, shouldRender = true) {
         this.hookId = renderHookId;
-        this.render();
+        if(shouldRender) {
+            this.render();
+        }
     }
 
     render() {}
@@ -74,8 +76,9 @@ class ShoppingCart extends Component {
 
 class ProductItem extends Component {
     constructor(product, renderHookId) {
-        super(renderHookId);
+        super(renderHookId, false);
         this.product = product;
+        this.render();
     }
 
     addToCart() {
@@ -101,33 +104,44 @@ class ProductItem extends Component {
 }
 
 class ProductList extends Component {
-    products = [
-        new Product (
-            'A pillow',
-            'https://indian-tv.cz/uploads/ls/e81aa3faf1b544bca4461666e830f31e/1641199818.jpg?',
-            'A soft pillow!',
-            19.99
-        ),
-        new Product (
-            'A Carpet',
-            'https://indian-tv.cz/uploads/ls/e81aa3faf1b544bca4461666e830f31e/1641199818.jpg?',
-            'A carpet which you might like - or not.',
-            99.99
-        )
-    ];
+    products = [];
 
     constructor(renderHookId) {
         super(renderHookId);
-        this.render();
+        this.fetchProducts();
+    }
+
+    fetchProducts() {
+        this.products = [
+            new Product (
+                'A pillow',
+                'https://indian-tv.cz/uploads/ls/e81aa3faf1b544bca4461666e830f31e/1641199818.jpg?',
+                'A soft pillow!',
+                19.99
+            ),
+            new Product (
+                'A Carpet',
+                'https://indian-tv.cz/uploads/ls/e81aa3faf1b544bca4461666e830f31e/1641199818.jpg?',
+                'A carpet which you might like - or not.',
+                99.99
+            )
+        ];
+        this.renderProducts();
+    }
+
+    renderProducts() {
+        for (const prod of this.products) {
+            new ProductItem(prod, 'prod-list');
+        }
     }
 
     render() {
         const prodList = this.createRootElement('ul', 'product-list', [
             new ElementAtrribute('id', 'prod-list')
-        ]);
-        for (const prod of this.products) {
-            new ProductItem(prod, 'prod-list');
-        }
+        ]);    
+        if(this.products && this.products.length > 0) {
+            this.renderProducts();
+        }    
     }
 }
 
