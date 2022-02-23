@@ -159,16 +159,25 @@ class DOMHelper {
   }
   
   class App {
-	static init() {
-	  const activeProjectsList = new ProjectList('active');
-	  const finishedProjectsList = new ProjectList('finished');
-	  activeProjectsList.setSwitchHandlerFunction(
-		finishedProjectsList.addProject.bind(finishedProjectsList)
-	  );
-	  finishedProjectsList.setSwitchHandlerFunction(
-		activeProjectsList.addProject.bind(activeProjectsList)
-	  );
-	}
+    static init() {
+      const activeProjectsList = new ProjectList('active');
+      const finishedProjectsList = new ProjectList('finished');
+      activeProjectsList.setSwitchHandlerFunction(
+      finishedProjectsList.addProject.bind(finishedProjectsList)
+      );
+      finishedProjectsList.setSwitchHandlerFunction(
+      activeProjectsList.addProject.bind(activeProjectsList)
+      );
+
+      document.getElementById('start-analytics-btn').addEventListener('click', this.startAnalytics);
+    }
+
+    static startAnalytics() {
+          const analyticsScripts = document.createElement('script');
+          analyticsScripts.src = 'assets/scripts/analytics.js';
+          analyticsScripts.defer = true;
+          document.head.append(analyticsScripts);
+    }
   }
   
   App.init();
