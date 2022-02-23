@@ -38,8 +38,8 @@ class DOMHelper {
   }
   
   class Tooltip extends Component {
-	constructor(closeNotifierFunction, text) {
-	  super();
+	constructor(closeNotifierFunction, text, hostElementId) {
+	  super(hostElementId);
 	  this.closeNotifier = closeNotifierFunction;
 	  this.text = text;
 	  this.create();
@@ -54,6 +54,20 @@ class DOMHelper {
 	  const tooltipElement = document.createElement('div');
 	  tooltipElement.className = 'card';
 	  tooltipElement.textContent = this.text;
+	  console.log(this.hostElement.getBoundingClientRect());
+
+	  const hostElPosLeft = this.hostElement.offsetLeft;
+	  const hostElPosTop = this.hostElement.offsetTop;
+	  const hostElHeight = this.hostElement.clientHeight;
+	  const parentElementScrolling = this.hostElement.parentElement.scrollTop;
+	
+	  const x = hostElPosLeft + 20;
+	  const y = hostElPosTop + hostElHeight - parentElementScrolling - 10;
+
+	  tooltipElement.style.position = 'absolute';
+	  tooltipElement.style.left = x + 'px';
+	  tooltipElement.style.top = y + 'px';
+
 	  tooltipElement.addEventListener('click', this.closeTooltip);
 	  this.element = tooltipElement;
 	}
@@ -77,7 +91,7 @@ class DOMHelper {
 	  const tooltipText = projetElement.dataset.extraInfo;
 	  const tooltip = new Tooltip(() => {
 		this.hasActiveTooltip = false;
-	  }, tooltipText);
+	  }, tooltipText, this.id);
 	  tooltip.attach();
 	  this.hasActiveTooltip = true;
 	}
